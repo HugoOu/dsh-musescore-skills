@@ -21,12 +21,13 @@ description: 用 MuseScore 4 写谱作曲：把 MusicXML 无头排版成谱面�
 
 正文提到的 `scripts/…`、`references/…` 一律相对 `$MS` 解析。
 
-## 第 0 步：先自检（新环境 / MuseScore 升级后必做）
+## 第 0 步：先自检（本机首次、或 MuseScore 升级后必做）
 
     & $PY "$MS\scripts\selfcheck.py" --out .\ms-selfcheck
 
 12 项全 PASS 才继续；失败项会直接指到「找不到 MuseScore」还是「产物异常」。
-顺手打开 `.\ms-selfcheck\selfcheck-1.png` 确认字体与符号正常。
+同一台机器已经跑通过时，可以跳过整套自检，但**至少要跑一次** `mscore.py check` 确认 exe 路径——
+别凭记忆认为「这台机器不是新环境」就把整步省掉（实测有模型这么干，然后卡在路径问题上）。
 
 ## 第 1 步：用 mxml 写谱
 
@@ -82,6 +83,9 @@ s.write("out.musicxml")
 
 `mscore.py` 自带 magic bytes 校验，逐行打印 `OK/BAD`；出现 `BAD` 就是真失败。
 验收标准：**图对 + `meta` 数字对 + 全部 OK**，三者缺一不算完成。
+
+产物统一放进工作目录下的 `.\<曲名>\`（musicxml / mscz / pdf / png / mp3 / mid 与生成器、验收脚本同目录），
+不要把十几份中间文件和临时脚本摊在仓库根目录——一次任务二三十个文件，混进现有工程会很难收拾。
 
 ## 坑（违反就静默出错）
 
