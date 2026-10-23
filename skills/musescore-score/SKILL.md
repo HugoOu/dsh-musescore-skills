@@ -1,6 +1,6 @@
 ---
 name: musescore-score
-description: 用 MuseScore 4 写谱作曲：把 MusicXML 无头排版成谱面，导出 .mscz/PDF/PNG/MP3/MIDI，也能在已有谱上改内容、转调、抽分谱。当用户要写歌、作曲、编曲、做五线谱、要打印谱或音频时使用；不负责在已打开的 MuseScore 窗口里实时编辑（需 MCP 插件桥）。
+description: 用 MuseScore 4 写谱作曲：把 MusicXML 无头排版成谱面，导出 .mscz/PDF/PNG/MP3/MIDI，也能在已有谱上改内容、转调、抽分谱。当用户要写歌、作曲、编曲、做五线谱、要打印谱或音频时使用；不负责 GUI 实时编辑与图片/简谱识谱（各需 MCP 桥或 OMR 工具）。
 ---
 # MuseScore 写谱（直连路线）
 
