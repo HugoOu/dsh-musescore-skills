@@ -142,15 +142,9 @@ m12.page_break()         # 新一页
 
 ## 11. 出图 / 出 PDF / 出音频 / 自检
 
-```bat
-python scripts/mscore.py convert in.musicxml out.mscz
-python scripts/mscore.py convert out.mscz out.pdf
-python scripts/mscore.py render out.mscz --dpi 150          :: 生成 out-1.png
-python scripts/mscore.py convert out.mscz out.mp3 --bitrate 192
-python scripts/mscore.py meta out.mscz
-```
+导出命令与验收标准只在 SKILL.md「第 2 / 3 步」维护，这里不重复。
+唯一要记的：`mscore.py` 的参数名是 `--dpi` / `--bitrate` / `--page`，不是传给 exe 的 `-r` / `-b`。
 
-注意 `mscore.py` 的参数名是 `--bitrate` / `--dpi`，不是 `-b` / `-r`（那是对 exe 的开关）。
 
 ## 12. 改一份已有的 `.mscz`
 

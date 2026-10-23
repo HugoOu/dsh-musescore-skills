@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """示例 2：四声部合唱（SATB）——演示多 part、每 part 独立谱号。
 
@@ -11,7 +11,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
 from mxml import Score  # noqa: E402
 
 # program: 53 = Choir Aahs

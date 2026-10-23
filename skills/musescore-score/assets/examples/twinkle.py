@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+﻿#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """示例 1：单旋律 + 歌词（最常用的「写一首歌」形态）。
 
@@ -10,7 +10,7 @@
 import os
 import sys
 
-sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "scripts"))
+sys.path.insert(0, os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "..", "scripts"))
 from mxml import Score  # noqa: E402
 
 s = Score(title="小星星", composer="Traditional", key=0, time=(4, 4), tempo=100)
