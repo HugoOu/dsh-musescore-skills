@@ -35,6 +35,8 @@
 
 两者互补：`scan-score-to-musescore` 只负责「图 → MusicXML」，排版和导出复用 `musescore-score` 的 `scripts/mscore.py`。
 
+> **识谱那半另有独立仓库：** [HugoOu/scan-score-to-musescore](https://github.com/HugoOu/scan-score-to-musescore)。几何拟合的长文教程、《欢乐颂》公有领域示例、`--annotate` 调试图都在那边——想读原理去那边，想一次装齐就在本合集。工具是同一套；区别只在打包方式：本合集的 `mxml_ext.py` 直接复用 `musescore-score` 的 `mxml.py`，独立仓库自带一份。
+
 ## 工作方式
 
 ```
@@ -120,6 +122,19 @@ python scripts/verify.py score.musicxml out --pdf --dpi 130 # 排版 + 出图 + 
 ```
 
 识谱技能是**刻意做成半自动**的：几何交给脚本，节奏和句法靠看图确认。遇到太差的扫描件，它会直接告诉你「这份图不适合自动识谱」，而不是瞎猜一版给你。
+
+### 两个技能怎么配合
+
+分界点就是 MusicXML，交接物是一个文件：
+
+| 你的起点 | 走法 |
+|---|---|
+| 一个想法 / 一段文字描述 | `musescore-score` → MusicXML → `mscore.py convert` / `render` |
+| 扫描件或位图 PDF | `scan-score-to-musescore` → `score.json` → MusicXML → `verify.py`（内部调 `mscore.py`） |
+| 人工核对好的 `score.json` | `score_from_json.py` → `mscore.py` |
+| 已有的 `.musicxml` | `mscore.py convert` / `render` / `meta` |
+
+上面的快速开始会一次装好两个技能，所以不用额外接线：识谱技能会去旁边的 `musescore-score` 找 `mxml.py` 和 `mscore.py`。只装识谱技能的话，请把 `musescore-score` 放在同一层——它的导入路径默认是 `~/.dsh/skills/musescore-score/scripts`（`verify.py` 可用 `--mscore` 覆盖）。
 
 ## 仓库结构
 

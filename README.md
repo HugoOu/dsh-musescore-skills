@@ -35,6 +35,8 @@ This is not "AI-generated music images". It is a deterministic notation pipeline
 
 The two compose: `scan-score-to-musescore` only produces MusicXML, then hands off to `musescore-score`'s `scripts/mscore.py` for engraving.
 
+> **The scan half also has a dedicated repository:** [HugoOu/scan-score-to-musescore](https://github.com/HugoOu/scan-score-to-musescore). It carries the long-form walkthrough of the geometry, the public-domain *Ode to Joy* example and the `--annotate` debug overlay — read the pipeline there, install from this bundle. The toolkit is the same; here `mxml_ext.py` reuses `mxml.py` from `musescore-score` instead of shipping its own copy.
+
 ## How it works
 
 ```
@@ -120,6 +122,19 @@ python scripts/verify.py score.musicxml out --pdf --dpi 130 # engrave + render +
 ```
 
 The scan skill is **semi-automatic by design**: geometry is scripted, rhythm and phrasing are confirmed by looking at the image. It tells you when a scan is too poor to automate instead of guessing.
+
+### Use them together
+
+The split is at MusicXML, so the hand-off is just a file:
+
+| Starting point | Route |
+|---|---|
+| An idea or a text brief | `musescore-score` → MusicXML → `mscore.py convert` / `render` |
+| A scan or bitmap PDF | `scan-score-to-musescore` → `score.json` → MusicXML → `verify.py` (which calls `mscore.py`) |
+| A hand-checked `score.json` | `score_from_json.py` → `mscore.py` |
+| An existing `.musicxml` | `mscore.py convert` / `render` / `meta` |
+
+Both skills are installed together by the quick start, so no extra wiring: the scan skill finds `mxml.py` and `mscore.py` in the sibling `musescore-score` skill. If you install only the scan skill, keep `musescore-score` next to it — its import path assumes `~/.dsh/skills/musescore-score/scripts` (for `verify.py`, override with `--mscore`).
 
 ## Repository layout
 
