@@ -1,0 +1,30 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# 技能运行时产物（避免误提交；也避免把受版权保护的转录结果一起提交）
+.ms-selfcheck/
+**/out/
+*.mscz
+*.mscx
+*.mxl
+*.mid
+*.mp3
+*.wav
+*.flac
+*.pdf
+
+# 编辑器 / 系统
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# 日志与临时文件
+*.log
+tmp/
+temp/
