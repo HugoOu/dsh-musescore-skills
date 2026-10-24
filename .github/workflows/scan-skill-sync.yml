@@ -1,0 +1,21 @@
+name: scan-skill-sync
+
+on:
+  push:
+  pull_request:
+  schedule:
+    # Weekly drift check: catches upstream scan-skill changes that were not synced.
+    - cron: "0 3 * * 1"
+
+jobs:
+  verify-vendored-skill:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout this bundle
+        uses: actions/checkout@v4
+
+      - name: Clone the scan skill source of truth
+        run: git clone --depth 1 https://github.com/HugoOu/scan-score-to-musescore.git .scan-source
+
+      - name: Verify the vendored copy is byte-identical
+        run: python3 .scan-source/tools/sync_scan_skill.py --bundle . --check

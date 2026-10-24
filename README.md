@@ -35,7 +35,7 @@ This is not "AI-generated music images". It is a deterministic notation pipeline
 
 The two compose: `scan-score-to-musescore` only produces MusicXML, then hands off to `musescore-score`'s `scripts/mscore.py` for engraving.
 
-> **The scan half also has a dedicated repository:** [HugoOu/scan-score-to-musescore](https://github.com/HugoOu/scan-score-to-musescore). It carries the long-form walkthrough of the geometry, the public-domain *Ode to Joy* example and the `--annotate` debug overlay — read the pipeline there, install from this bundle. The toolkit is the same; here `mxml_ext.py` reuses `mxml.py` from `musescore-score` instead of shipping its own copy.
+> **The scan half also has a dedicated repository:** [HugoOu/scan-score-to-musescore](https://github.com/HugoOu/scan-score-to-musescore). It carries the long-form walkthrough of the geometry, the public-domain *Ode to Joy* example and the `--annotate` debug overlay — read the pipeline there, install from this bundle. The vendored copy here is kept byte-for-byte in sync with that repo; the only piece it borrows from `musescore-score` is `mscore.py`, for engraving.
 
 ## How it works
 
@@ -134,7 +134,7 @@ The split is at MusicXML, so the hand-off is just a file:
 | A hand-checked `score.json` | `score_from_json.py` → `mscore.py` |
 | An existing `.musicxml` | `mscore.py convert` / `render` / `meta` |
 
-Both skills are installed together by the quick start, so no extra wiring: the scan skill finds `mxml.py` and `mscore.py` in the sibling `musescore-score` skill. If you install only the scan skill, keep `musescore-score` next to it — its import path assumes `~/.dsh/skills/musescore-score/scripts` (for `verify.py`, override with `--mscore`).
+Both skills are installed together by the quick start, so no extra wiring: the scan skill ships its own MusicXML writer and only calls `mscore.py` from the sibling `musescore-score` skill for engraving. If you install only the scan skill, keep `musescore-score` next to it — `verify.py` assumes `~/.dsh/skills/musescore-score/scripts/mscore.py` (override with `--mscore`).
 
 ## Repository layout
 
@@ -154,7 +154,7 @@ dsh-musescore-skills/
     │   └── assets/examples/  twinkle.py · satb.py
     └── scan-score-to-musescore/
         ├── SKILL.md
-        ├── scripts/  pdf_scan · pitchmap · probe · score_from_json · verify · mxml_ext
+        ├── scripts/  mxml · mxml_ext · pdf_scan · pitchmap · probe · score_from_json · verify
         └── references/notation-mapping.md · assets/example_score.json
 ```
 
@@ -205,7 +205,7 @@ See [docs/legal.md](docs/legal.md) for the full analysis.
 
 ## Contributing
 
-Issues and PRs welcome — especially: MuseScore 4.x version quirks, macOS/Linux verification, and better OMR for chordal/dense scores. Please keep examples self-made or public domain.
+Issues and PRs welcome — especially: MuseScore 4.x version quirks, macOS/Linux verification, and better OMR for chordal/dense scores. Please keep examples self-made or public domain. **Scan-toolkit changes belong in the [dedicated repo](https://github.com/HugoOu/scan-score-to-musescore)** — this bundle vendors it and is synced from there.
 
 ## License
 
