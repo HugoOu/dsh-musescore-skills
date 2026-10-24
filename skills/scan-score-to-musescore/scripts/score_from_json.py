@@ -152,7 +152,9 @@ def main() -> None:
     mr = [m.number for p in score.parts for m in p.measures
           if any("multiple-rest" in a for a in getattr(m, "attributes", []))]
     xml = postprocess(xml, mr)
-    Path(sys.argv[2]).write_text(xml, encoding="utf-8", newline="\n")
+    out = Path(sys.argv[2])
+    out.parent.mkdir(parents=True, exist_ok=True)
+    out.write_text(xml, encoding="utf-8", newline="\n")
     print(f"wrote {sys.argv[2]}（{sum(len(p.measures) for p in score.parts)} 小节）")
 
 

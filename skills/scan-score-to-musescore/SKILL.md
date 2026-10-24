@@ -109,7 +109,7 @@ MuseScore 默认会把 40~50 小节排成 3 页。要一页：
 2. 编译出 `.mscz` 后改 `score_style.mss`（`.mscz` 是 zip）：`<spatium>1.3</spatium>`、页边距 `0.45/0.42/0.35` 英寸、`<minSystemDistance>6</minSystemDistance>`、`<maxSystemDistance>18</maxSystemDistance>`、`<enableVerticalSpread>1</enableVerticalSpread>`；
 3. 重新 render 检查页数 = 1，再打开看字号是否还能读（spatium < 1.2 一般就偏小了）。
 
-`mscz` 是 zip，改完 `score_style.mss` 重新打包即可；不要改 `.mscx` 结构本身。
+做法：编出 `.mscz` 后改 zip 里的 `score_style.mss`（`<spatium>`、页边距、`minSystemDistance`、`enableVerticalSpread`），再 render 确认页数；具体键值见 `references/notation-mapping.md` 第 6 节。
 
 ## 坑（每条都踩过）
 
@@ -135,7 +135,8 @@ MuseScore 默认会把 40~50 小节排成 3 页。要一页：
 - `scripts/pitchmap.py`：符头检测 + 音高换算（候选，需人工核对）。
 - `scripts/probe.py`：局部放大 / ASCII 字符画，核对线音与间音。
 - `scripts/score_from_json.py`：逐小节 JSON → MusicXML（和弦/房子/D.S./反复/多小节休止）。
-- `scripts/mxml_ext.py`：给 `mxml` 补 MusicXML 记谱元素的底层封装（被 `score_from_json.py` 调用）。
+- `scripts/mxml.py`：自带的最小 MusicXML 写出器（无第三方依赖）。
+- `scripts/mxml_ext.py`：给 `mxml` 补和弦符号/房子/D.S./反复等记谱元素（被 `score_from_json.py` 调用）。
 - `scripts/verify.py`：编译 + 出图 + meta 体检。
 - `assets/example_score.json`：可直接跑通的 `score.json` 模板。
 - `references/notation-mapping.md`：坐标→音高的数学、调号拼写、节奏判定细则、MusicXML 注入片段。

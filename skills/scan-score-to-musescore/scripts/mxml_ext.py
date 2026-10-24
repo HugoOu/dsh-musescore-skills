@@ -1,15 +1,24 @@
 # -*- coding: utf-8 -*-
-"""扩展 mxml：和弦符号、反复、房子(volta)、D.S./Coda 文字与播放指令。"""
-import sys, os
-for _p in (os.path.expanduser(r"~\.dsh\skills\musescore-score\scripts"),
-           os.path.expandvars(r"%DSH_HOME%\skills\musescore-score\scripts")):
-    if os.path.isdir(_p) and _p not in sys.path:
-        sys.path.insert(0, _p)
-try:
-    import mxml
-except ImportError as e:  # noqa: F841
-    raise SystemExit("找不到 mxml.py：请先安装/保留 musescore-score 技能，或把 mxml.py 放到本脚本同目录。")
+"""Extend the bundled minimal mxml writer with notation it does not cover.
+
+Adds:
+  * <harmony> chord symbols (incl. slash chords / offsets)
+  * <ending> volta brackets (1st/2nd endings)
+  * <words> directions: To Coda / D.S. al Coda / Coda
+  * <segno> / <coda> signs
+  * repeat barlines, final barline
+
+These are injected by monkey-patching Measure._emit; the injected chunks are
+placed at the right position (harmony/directions before the first <note>,
+barlines after it) so MuseScore reads them correctly.
+"""
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import mxml
 from xml.sax.saxutils import escape
+
 
 _orig_emit = mxml.Measure._emit
 
